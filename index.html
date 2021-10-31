@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="">
+
+    <title>Demo: ClassiC TTT Классический ТТТ FastDL FPS / LSM</title>
+    <meta name="description" content="ClassiC TTT Классический ТТТ FastDL FPS">
+
+    <meta name="theme-color" content="#4286f4" />
+
+    <link href="https://gmod-lsm.com/assets/css/normalize.css" rel="stylesheet">
+
+    <link href="https://gmod-lsm.com/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://gmod-lsm.com/assets/css/loadingscreen-base.css" rel="stylesheet">
+    
+     <link href="https://gmod-lsm.com/assets/css/load.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="https://gmod-lsm.com/images/favicon.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+
+    <style>
+
+  .text-left-layout-progress{
+    padding-top: 0.6rem !important;
+  }
+
+  .text-right-layout-progress{
+    padding-top: 0.6rem !important;
+  }
+
+  @media screen and (max-width: 1152px), screen and (max-height: 745px) {
+
+  	.text-left-layout-progress{
+    padding-top: 0.46rem !important;
+  }
+
+  .text-right-layout-progress{
+    padding-top: 0.45rem !important;
+  }
+
+  }
+
+  #bg, #bg img, #bg2{
+    transition: 2s filter linear;
+-webkit-transition: 2s -webkit-filter linear;
+-moz-transition: 2s -moz-filter linear;
+-ms-transition: 2s -ms-filter linear;
+-o-transition: 2s -o-filter linear;
+  }
+
+    html,body{
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body{
+      background: #000;
+    }
+
+
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+  	.loading-screen,.now-playing-text{
+  		font-family: 'Roboto', sans-serif; font-weight: 800
+  	}
+  </style>
+
+  </head>
+
+  <body>
+
+    <div id="loader-wrapper">
+      <div id="loader"></div>
+  </div>
+
+  
+  	  		<div class="now-playing" style="background-color: #ffffff">
+  		<div class="now-playing-icon"><i style="color: #343a40" class="fas fa-volume-up fa-2x"></i></div><div class="now-playing-text"><label for="music-text" class="ml-2 mb-0 pb-0 lead" style="color: #000000">Сейчас играет:</label>
+  		<h5 id="music-text" class="ml-2 mb-0 py-0" style="color: #343a40">Lensko - Circles</h5></div>
+  		</div>
+  		
+    
+        
+    
+
+	
+  
+    
+
+<link href="https://gmod-lsm.com/assets/css/designs/simple.css?v=1.5" rel="stylesheet">
+
+<div class="loading-screen">
+      <div class="title-info">
+        <h4 class="my-0 py-0" style="color: #ffffff">Добро пожаловать на</h4>
+        <h1 class="my-0 py-0" style="color: #ffffff">ClassiC TTT Классический ТТТ FastDL FPS</h1>
+      </div>
+      <div class="progress-bar-n text-left" style="background-color: #ffffff">
+        <h2 class="text-left-layout-progress" style="margin: 0; line-height: 1 !important; color: #343a40"><div style='display: inline-block;font-weight:600;padding-top: 2px;'><span id="percent">0</span>%</div><span class="progresstext text-right-layout-progress" id="progresstext">Получение информации о сервере...</span></h2>
+          <div class="progress-bar-n-inner" id="progress-bar" style="background-color: #4286f4"><div style="display: inline-block;"><h2 class="text-left-layout-progress" style="margin: 0; line-height: 1 !important; color: #ffffff"><div style="overflow: visible;display: inline-block;white-space: nowrap;font-weight:600;padding-top: 2px;"><span id="percent-loaded">0</span>%</div><span class="progresstext text-right-layout-progress" id="progresstext-loaded">Получение информации о сервере...</span></h2></div></div>
+        </div>
+              </div>
+      <div style="background-size:100%; background-size: cover; margin: 0; padding: 0; position: absolute; left: -5%; width: 110%; height: 110%; top: -5%;" id="bg">
+      </div> 
+
+      <div style="background-size:100%; background-size: cover; margin: 0; padding: 0; position: absolute; left: -5%; width: 110%; height: 110%; top: -5%;" id="bg2">
+      </div>
+
+    <script src="https://gmod-lsm.com/assets/vendor/jquery/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $( "#loader-wrapper" ).fadeOut( "slow" );
+      });
+    $(function () {
+  $("[data-toggle=popover]").popover({html:true})
+  $("#upgrade-pro").popover('show')
+
+})
+  </script>
+
+    <script type="text/javascript">
+
+   document.getElementById("percent").innerHTML = "5";
+   document.getElementById("percent-loaded").innerHTML = "5";
+
+   $('#progress-bar').css({ "width" : "5%"});
+
+   document.getElementById("progresstext").innerHTML = "\u041f\u043e\u043b\u0443\u0447\u0435\u043d\u0438\u0435 \u0438\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u0438 \u043e \u0441\u0435\u0440\u0432\u0435\u0440\u0435...";
+   document.getElementById("progresstext-loaded").innerHTML = "\u041f\u043e\u043b\u0443\u0447\u0435\u043d\u0438\u0435 \u0438\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u0438 \u043e \u0441\u0435\u0440\u0432\u0435\u0440\u0435...";
+</script>
+
+      <script type="text/javascript">
+
+        var bguse = ["https:\/\/gmod-lsm.com\/images\/presets\/background1.jpeg"        ,"https:\/\/gmod-lsm.com\/images\/presets\/background2.jpeg","https:\/\/gmod-lsm.com\/images\/presets\/background3.jpeg","https:\/\/gmod-lsm.com\/images\/presets\/background4.jpeg"        ];
+      </script>
+
+             <script type="text/javascript">
+      $(function() {
+      var volume = 15;
+        $("audio").each(function(){ this.volume = volume/100; });
+      });
+    </script>
+    <audio controls autoplay loop hidden>
+      <source src="https://gmod-lsm.com/music/ogg/circles.ogg" type="audio/ogg">
+      <source src="https://gmod-lsm.com/music/mp3/circles.mp3" type="audio/mpeg">
+    </audio>
+          <script>
+    	//Change Progress
+	$(document).ready(function(){
+	
+	for (let progress = 0; progress < 11; progress++) {
+		setTimeout( function timer(){
+	
+	if(progress == 1){
+
+
+      var blurinit = false;
+      if(blurinit == false){
+        $('#bg, #bg2').css('filter','blur(8px)');
+        $('#bg, #bg2').css('-webkit-filter','blur(8px)');
+        blurinit = true;
+      }
+
+  
+      
+	$("#progress-bar").animate({width: '10%'});
+	
+	$('#percent').each(function() {
+  var $this = $(this),
+      countTo = 10;
+  
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 300,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+});
+	
+	}
+	
+	if(progress == 2){
+		
+	$("#progresstext").text("\u0423\u0441\u0442\u0430\u043d\u043e\u0432\u043a\u0430 \u0434\u043e\u043f\u043e\u043b\u043d\u0435\u043d\u0438\u0439");
+	$("#progress-bar").animate({width: '20%'});
+	
+	
+	$('#percent').each(function() {
+  var $this = $(this),
+      countTo = 20;
+  
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 300,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+});
+	
+	}
+	
+	if(progress == 3){
+	
+	$("#progress-bar").animate({width: '30%'});
+	
+	
+	$('#percent').each(function() {
+  var $this = $(this),
+      countTo = 30;
+  
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 300,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+});
+	
+	}
+	
+	if(progress == 4){
+	
+	$("#progress-bar").animate({width: '40%'});
+	
+	
+	$('#percent').each(function() {
+  var $this = $(this),
+      countTo = 40;
+  
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 300,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+});
+	
+	}
+	
+	if(progress == 5){
+	
+	$("#progress-bar").animate({width: '50%'});
+	
+	
+	$('#percent').each(function() {
+  var $this = $(this),
+      countTo = 50;
+  
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 300,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+});
+	
+	}
+	/*
+	if(progress == 6){
+	
+	$("#progresstext").text('Workshop complete');
+	$("#progress-bar").animate({width: '60%'});
+	
+	
+	$('#percent').each(function() {
+  var $this = $(this),
+      countTo = 60;
+  
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 300,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+});
+	
+	} */
+	
+	if(progress == 6){
+		
+	$("#progresstext").text("\u0420\u0430\u0431\u043e\u0442\u0430 \u0441 \u043c\u0430\u0441\u0442\u0435\u0440\u0441\u043a\u043e\u0439 \u0437\u0430\u0432\u0435\u0440\u0448\u0435\u043d\u0430");
+	$("#progress-bar").animate({width: '70%'});
+	
+	
+	$('#percent').each(function() {
+  var $this = $(this),
+      countTo = 70;
+  
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 300,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+});
+	
+	}
+	
+	if(progress == 8){
+	
+	$("#progress-bar").animate({width: '80%'});
+	
+	
+	$('#percent').each(function() {
+  var $this = $(this),
+      countTo = 80;
+  
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 300,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+});
+	
+	}
+	
+	if(progress == 9){
+		
+	$("#progresstext").text("\u041e\u0442\u043f\u0440\u0430\u0432\u043a\u0430 \u0438\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u0438 \u043e \u043a\u043b\u0438\u0435\u043d\u0442\u0435...");
+	$("#progress-bar").animate({width: '90%'});
+	
+	
+	$('#percent').each(function() {
+  var $this = $(this),
+      countTo = 90;
+  
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 300,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+});
+	
+	}
+	
+	if(progress == 10){
+	
+	$("#progress-bar").animate({width: '100%'});
+	
+	
+	$('#percent').each(function() {
+  var $this = $(this),
+      countTo = 100;
+  
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 300,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+});
+	
+	}
+
+
+	if(progress == 1){
+	
+	$('#percent-loaded').each(function() {
+  var $this = $(this),
+      countTo = 10;
+  
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 300,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+});
+	
+	}
+	
+	if(progress == 2){
+		
+	$("#progresstext-loaded").text("\u0423\u0441\u0442\u0430\u043d\u043e\u0432\u043a\u0430 \u0434\u043e\u043f\u043e\u043b\u043d\u0435\u043d\u0438\u0439");
+	
+	
+	$('#percent-loaded').each(function() {
+  var $this = $(this),
+      countTo = 20;
+  
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 300,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+});
+	
+	}
+	
+	if(progress == 3){
+	
+	
+	
+	$('#percent-loaded').each(function() {
+  var $this = $(this),
+      countTo = 30;
+  
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 300,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+});
+	
+	}
+	
+	if(progress == 4){
+	
+	
+	
+	$('#percent-loaded').each(function() {
+  var $this = $(this),
+      countTo = 40;
+  
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 300,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+});
+	
+	}
+	
+	if(progress == 5){
+	
+	
+	
+	$('#percent-loaded').each(function() {
+  var $this = $(this),
+      countTo = 50;
+  
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 300,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+});
+	
+	}
+	/*
+	if(progress == 6){
+	
+	$("#progresstext").text('Workshop complete');
+	$("#progress-bar").animate({width: '60%'});
+	
+	
+	$('#percent').each(function() {
+  var $this = $(this),
+      countTo = 60;
+  
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 300,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+});
+	
+	} */
+	
+	if(progress == 6){
+		
+	$("#progresstext-loaded").text("\u0420\u0430\u0431\u043e\u0442\u0430 \u0441 \u043c\u0430\u0441\u0442\u0435\u0440\u0441\u043a\u043e\u0439 \u0437\u0430\u0432\u0435\u0440\u0448\u0435\u043d\u0430");
+	
+	
+	$('#percent-loaded').each(function() {
+  var $this = $(this),
+      countTo = 70;
+  
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 300,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+});
+	
+	}
+	
+	if(progress == 8){
+	
+	
+	
+	$('#percent-loaded').each(function() {
+  var $this = $(this),
+      countTo = 80;
+  
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 300,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+});
+	
+	}
+	
+	if(progress == 9){
+		
+	$("#progresstext-loaded").text("\u041e\u0442\u043f\u0440\u0430\u0432\u043a\u0430 \u0438\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u0438 \u043e \u043a\u043b\u0438\u0435\u043d\u0442\u0435...");
+	
+	
+	$('#percent-loaded').each(function() {
+  var $this = $(this),
+      countTo = 90;
+  
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 300,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+});
+	
+	}
+	
+	if(progress == 10){
+	
+	
+	
+	$('#percent-loaded').each(function() {
+  var $this = $(this),
+      countTo = 100;
+  
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 300,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+
+  });  
+});
+	
+	}
+
+	}, progress*2000 );
+	} 
+
+});
+
+
+    </script>
+
+    <script>
+		//showDemo();
+    $("#showDemo").fadeOut(0);
+		function showDemo(){
+			$("#showDemo").fadeIn(2000);
+			setTimeout(function(){
+				$("#showDemo").fadeOut(2000);
+				setTimeout(showDemo, 4000);
+			}, 4000);
+		}
+	</script>
+
+      <script src="https://gmod-lsm.com/assets/js/background-cycle.js?v=1.1"></script>
+
+    <script src="https://gmod-lsm.com/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+</html>
